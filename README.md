@@ -21,3 +21,4 @@ Nosso jogo conta com o uso de alguns conceitos da Física, como a Mecânica, Cin
 Além disso é implementando em cima dos disparos é a formula da gravidade (g = (G * M) / d²) Onde g é a aceleração gravitacional, M é a massa do corpo central , d é a distância entre o objeto em questão e o centro do corpo central, e G é a constante gravitacional.
 
 # 4.O JOGO
+![alt-text](https://github.com/PedroPertusi/CosmicChaos-Pygame-Project/blob/main/Assets/gameplay.gif)
