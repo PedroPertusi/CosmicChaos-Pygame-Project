@@ -1,9 +1,9 @@
 # Cosmic Chaos
 ### Feito por Pedro Pertusi
 
-#1. Como executar o jogo?
+# 1. Como executar o jogo?
 
-1. É necessário instalar versão 3.10 ou superior do Python. [Guia para download/update](https://www.youtube.com/watch?v=pDBnCDuL-dc&vl=pt);
+1. É necessário instalar versão 3.10 ou superior do Python. [Instruções caso necessário!](https://www.youtube.com/watch?v=pDBnCDuL-dc&vl=pt);
 2. Neste repositório será necessário clonar o repositório através do terminal usando o comando: *git clone -link* ou baixar o arquivo .zip;
 4. Com o terminal aberto na pasta utilize o comando *pip install -r requirements.txt* para instalar tudo necessário para rodar o jogo;
 5. Após isso, novamente na pasta baixada/clonada execute o comando python Main.py ou use o botão de executar se disponível.
