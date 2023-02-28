@@ -24,4 +24,5 @@ Além disso é implementando em cima dos disparos é a formula da gravidade (g =
 Onde g é a aceleração gravitacional, M é a massa do corpo central , d é a distância entre o objeto em questão e o centro do corpo central, e G é a constante gravitacional.
 
 # 4.O JOGO
+* foi realizado uns ajustes e regravação do vídeo em cima do prazo devido ao fato de meu MACOS ser muito antigo e não executar bem o pygame, tirando assim a correspondência real com outros computadores
 ![alt-text](https://github.com/PedroPertusi/CosmicChaos-Pygame-Project/blob/main/Assets/gameplay.gif)

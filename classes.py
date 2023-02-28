@@ -22,7 +22,6 @@ class Jogo:
 
     Attributes
     ----------
-    clock : um objeto clock do pygame
     window : armazena a janela do jogo do pygame
     tela_atual : armazena um objeto que representa a tela atual do jogo
 
@@ -43,7 +42,6 @@ class Jogo:
         """
             Parameters
             ----------
-            clock : um objeto clock do pygame
             window : armazena a janela do jogo do pygame
             tela_atual : armazena um objeto que representa a tela atual do jogo
 
@@ -51,7 +49,7 @@ class Jogo:
         pygame.init()
         pygame.font.init()
         self.window =  pygame.display.set_mode([WIDTH,HEIGHT])
-        pygame.display.set_caption("Nome do Jogo")
+        pygame.display.set_caption("Cosmic Chaos")
 
         self.tela_atual = Tela_inicio()
         
@@ -74,6 +72,27 @@ class Jogo:
 
 
 class Tela_inicio():
+    """
+    Classe que roda a tela inicial
+
+    ...
+
+    Attributes
+    ----------
+    tela_inicio : png da tela inicial
+    rect_botao_play : define os limites do botão de play
+    rect_regras : define os limites do botão de ler as regras
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar todos os atríbutos da tela
+
+    """
     def __init__(self):
         self.tela_inicio = pygame.image.load('Assets/Cosmic_Chaos.png').convert_alpha()
         self.rect_botao_play = (455,214,256,226)
@@ -91,8 +110,6 @@ class Tela_inicio():
                         return Level0()
                     elif colisao_ponto_retangulo(event.pos[0],event.pos[1], self.rect_regras):   
                         return Tela_regras()
-            #         if colisao_ponto_retangulo(event.pos[0],event.pos[1], self.rect_botao_regras):
-            #             return Regras()
 
         
         return self    
@@ -103,6 +120,26 @@ class Tela_inicio():
         surface.blit(self.tela_inicio,(0,0))
 
 class Tela_regras():
+    """
+    Classe que roda a tela de regras
+
+    ...
+
+    Attributes
+    ----------
+    tela_regras : png da tela de regras
+    rect_back : define os limites do botão de voltar a tela inicial
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar todos os atríbutos da tela
+
+    """
     def __init__(self):
         self.tela_regras = pygame.image.load('Assets/regras.png').convert_alpha()
         self.rect_back = (1065,505,135,100)
@@ -127,7 +164,33 @@ class Tela_regras():
         surface.blit(self.tela_regras,(0,0))
 
 class Level0():
-    def __init__(self): #881,1042,45,45 --> cord do tiro 
+    """
+    Classe que roda a primeira fase 
+
+    ...
+
+    Attributes
+    ----------
+    qtd_tiros : usado para contar o limite máximo de tiros (3)
+    pos_planetas : pos dos planetas no png das sprites
+    lista_tiros : armazena os objetos de tiro presentes na tela (max 1)
+    space_shooter : armazena o objeto da classe SpaceShooter (canhão responsável por atirar)
+    background : armazena o png do fundo da tela
+    tiro_mini : png do tiro pequeno que fica acima marcando os tiros ainda disponíveis 
+    lista_planetas : armazena os objetos da classe Planeta presentes na fase
+    lista_satelite : armazena os objetos da classe Satelite presentes na fase
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar todos os atríbutos da tela
+
+    """
+    def __init__(self): 
         self.qtd_tiros = 3
         self.pos_planetas = {'terra':(49,53,83,77),'netuno':(154,56,82,75),'marte':(48,162,85,79)}
         self.lista_tiros = []
@@ -145,9 +208,8 @@ class Level0():
 
         for planeta in self.lista_planetas:
             if len(self.lista_tiros) > 0:
-                # if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
                 a = - planeta.gravidade(self.lista_tiros[0].pos)
-                if np.linalg.norm(planeta.pos - self.lista_tiros[0].pos) <= (planeta.pos[2]/2) + (self.lista_tiros[0].w/2):
+                if np.linalg.norm(planeta.pos - self.lista_tiros[0].pos) <= (planeta.pos_sprites[2]/2) + (self.lista_tiros[0].w/2):
                     self.lista_tiros.remove(self.lista_tiros[0])
 
         if len(self.lista_tiros) > 0:
@@ -204,14 +266,40 @@ class Level0():
 
 
 class Level1():
-    def __init__(self): #881,1042,45,45 --> cord do tiro 
+    """
+    Classe que roda a segunda fase 
+
+    ...
+
+    Attributes
+    ----------
+    qtd_tiros : usado para contar o limite máximo de tiros (3)
+    pos_planetas : pos dos planetas no png das sprites
+    lista_tiros : armazena os objetos de tiro presentes na tela (max 1)
+    space_shooter : armazena o objeto da classe SpaceShooter (canhão responsável por atirar)
+    background : armazena o png do fundo da tela
+    tiro_mini : png do tiro pequeno que fica acima marcando os tiros ainda disponíveis 
+    lista_planetas : armazena os objetos da classe Planeta presentes na fase
+    lista_satelite : armazena os objetos da classe Satelite presentes na fase
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar todos os atríbutos da tela
+
+    """
+    def __init__(self): 
         self.qtd_tiros = 3
         self.pos_planetas = {'terra':(49,53,83,77),'netuno':(154,56,82,75),'marte':(48,162,85,79)}
         self.lista_tiros = []
         self.space_shooter = SpaceShooter()
         self.background = pygame.image.load('Assets/space_background.png').convert_alpha()
         self.tiro_mini = pygame.image.load('Assets/tiro_mini.png').convert_alpha()
-        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[600,250],5000),Planeta(self.pos_planetas['netuno'],[800,150], 1000),Planeta(self.pos_planetas['marte'],[800,500],4000)]
+        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[600,250],5000),Planeta(self.pos_planetas['netuno'],[800,150], 1000),Planeta(self.pos_planetas['marte'],[800,500],2000)]
         self.lista_satelite = [Satellite([1000,200])]
         
     
@@ -224,15 +312,17 @@ class Level1():
 
         for planeta in self.lista_planetas:
             if len(self.lista_tiros) > 0:
-                # if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
                 a -= planeta.gravidade(self.lista_tiros[0].pos)
+                if np.linalg.norm(planeta.pos - self.lista_tiros[0].pos) <= ((planeta.pos_sprites[2]/2) + (self.lista_tiros[0].w/2) - 25):
+                    self.lista_tiros.remove(self.lista_tiros[0])
+
 
         if len(self.lista_tiros) > 0:
             for tiro in self.lista_tiros:
-                x = tiro.atualiza(pygame.Rect(self.lista_satelite[0].pos[0],self.lista_satelite[0].pos[1],55,55),a) #55,55 eh o w,h do sattelite mas apenas dele e nao da img
+                x = tiro.atualiza(pygame.Rect(self.lista_satelite[0].pos[0],self.lista_satelite[0].pos[1],55,55),a) 
                 if not x:
                     self.lista_tiros.remove(self.lista_tiros[0])
-                elif x == 'acabou': #mexendo aqui pra acabar
+                elif x == 'acabou': 
                     return Level2()
 
         self.lista_satelite[0].atualiza()
@@ -279,14 +369,40 @@ class Level1():
             sat.desenha(surface)
 
 class Level2():
-    def __init__(self): #881,1042,45,45 --> cord do tiro 
+    """
+    Classe que roda a terceira e última fase 
+
+    ...
+
+    Attributes
+    ----------
+    qtd_tiros : usado para contar o limite máximo de tiros (3)
+    pos_planetas : pos dos planetas no png das sprites
+    lista_tiros : armazena os objetos de tiro presentes na tela (max 1)
+    space_shooter : armazena o objeto da classe SpaceShooter (canhão responsável por atirar)
+    background : armazena o png do fundo da tela
+    tiro_mini : png do tiro pequeno que fica acima marcando os tiros ainda disponíveis 
+    lista_planetas : armazena os objetos da classe Planeta presentes na fase
+    lista_satelite : armazena os objetos da classe Satelite presentes na fase
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar todos os atríbutos da tela
+
+    """
+    def __init__(self):  
         self.qtd_tiros = 3
         self.pos_planetas = {'terra':(49,53,83,77),'netuno':(154,56,82,75),'marte':(48,162,85,79),'saturno':(240,385,125,48),'jupiter':(262,164,83,76)}
         self.lista_tiros = []
         self.space_shooter = SpaceShooter()
         self.background = pygame.image.load('Assets/space_background.png').convert_alpha()
         self.tiro_mini = pygame.image.load('Assets/tiro_mini.png').convert_alpha()
-        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[300,100],5000),Planeta(self.pos_planetas['netuno'],[450,450],1000),Planeta(self.pos_planetas['marte'],[900,50],2000),Planeta(self.pos_planetas['saturno'],[530,230],3003)]
+        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[300,100],5000),Planeta(self.pos_planetas['netuno'],[450,450],1000),Planeta(self.pos_planetas['marte'],[700,200],2500),Planeta(self.pos_planetas['saturno'],[780,450],7500)]
         self.lista_satelite = [Satellite([1000,200])]
         
     
@@ -299,15 +415,17 @@ class Level2():
 
         for planeta in self.lista_planetas:
             if len(self.lista_tiros) > 0:
-                # if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
                 a -= planeta.gravidade(self.lista_tiros[0].pos)
+                if np.linalg.norm(planeta.pos - self.lista_tiros[0].pos) <= (planeta.pos_sprites[3]/2) + (self.lista_tiros[0].w/2):
+                    self.lista_tiros.remove(self.lista_tiros[0])
+
 
         if len(self.lista_tiros) > 0:
             for tiro in self.lista_tiros:
-                x = tiro.atualiza(pygame.Rect(self.lista_satelite[0].pos[0],self.lista_satelite[0].pos[1],55,55),a) #55,55 eh o w,h do sattelite mas apenas dele e nao da img
+                x = tiro.atualiza(pygame.Rect(self.lista_satelite[0].pos[0],self.lista_satelite[0].pos[1],55,55),a) 
                 if not x:
                     self.lista_tiros.remove(self.lista_tiros[0])
-                elif x == 'acabou': #mexendo aqui pra acabar
+                elif x == 'acabou': 
                     return Tela_Ganhou()
 
         self.lista_satelite[0].atualiza()
@@ -354,6 +472,28 @@ class Level2():
             sat.desenha(surface)
 
 class Tela_Perdeu():
+    """
+    Classe que roda a tela após o jogador perder 
+
+    ...
+
+    Attributes
+    ----------
+    tela_perdeu : png da tela de derrota
+    rect_play : define os limites do botão de jogar novamente
+    back_to_inicio : define os limites do botão de retornar ao menu
+    
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar todos os atríbutos da tela
+
+    """
     def __init__(self):
         self.tela_perdeu = pygame.image.load('Assets/perdeu.png').convert_alpha()
         self.rect_play = [485,252,227,202]
@@ -378,6 +518,28 @@ class Tela_Perdeu():
         surface.blit(self.tela_perdeu,(0,0))
 
 class Tela_Ganhou():
+    """
+    Classe que roda a tela após o jogador perder 
+
+    ...
+
+    Attributes
+    ----------
+    tela_ganhou : png da tela de derrota
+    rect_play : define os limites do botão de jogar novamente
+    back_to_inicio : define os limites do botão de retornar ao menu
+    
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar todos os atríbutos da tela
+
+    """
     def __init__(self):
         self.tela_ganhou = pygame.image.load('Assets/ganhou.png').convert_alpha()
         self.rect_play = [485,252,227,202]
@@ -402,9 +564,35 @@ class Tela_Ganhou():
         surface.blit(self.tela_ganhou,(0,0))
 #-------------------------------------------------------#
 class SpaceShooter():
+    """
+    Classe que gera o objeto do canhão presente na fase
+
+    ...
+
+    Attributes
+    ----------
+    player : png do objeto
+    player_pos : armazena a posição inicial do objeto
+    rot_image : armazena a posição após rotacionado do objeto
+    player_rect : armazena os limites do objeto
+    rot_image_rect : armazena os limites do objeto depois de rotacionado 
+    mx,my : posição do mouse na tela armazenada
+    w,h : armazena largura e altura do objeto
+    angle : armazena o angulo se o objeto rotacionado
+    
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por parar loop do jogo quando encerrado e computar outros eventos da tela
+    
+    desenha()
+        responsável por desenhar o objeto SpaceShooter, e também realiza a rotação se necessária de acordo com o mx,my
+
+    """
     def __init__(self):
         self.player = pygame.image.load("Assets/space-fighter.png").convert_alpha()
-        # self.imagem = pygame.transform.scale(self.imagem,(WIDTH * 0.1, HEIGHT * 0.2))
         self.player_pos = ''
         self.player_rect = ''
         self.rot_image = ''
@@ -416,11 +604,9 @@ class SpaceShooter():
         self.h = 120
         self.angle = 0
     
-    def atualiza(self,):
-        pass
 
     def desenha(self,surface):
-        self.player_pos  = (80,525)#surface.get_rect().center
+        self.player_pos  = (80,525)
         self.player_rect = self.player.get_rect(center = self.player_pos)
 
         dx, dy = self.mx - self.player_rect.centerx, self.my - self.player_rect.centery
@@ -435,12 +621,41 @@ class SpaceShooter():
         surface.blit(self.rot_image, self.rot_image_rect.topleft)
 
 class Tiro():
+    """
+    Classe que gera o objeto do tiro presente na fase
+
+    ...
+
+    Attributes
+    ----------
+    tiro : png do objeto
+    w,h : armazena largura e altura do objeto
+    velocidade : armazena a velocidade que é constantemente atualizada de acordo com a gravidade
+    pos: array que armazena a posição atual do tiro
+    mouse_pos : armazena o vetor da posição clicada no mouse
+    distance : armazena e calcula a distância do tiro em relação ao click do mouse
+    direction : dita a direção em que o objeto tem que se deslocar]
+    aceleracao : aceleração que o objeto possui (essencial pois é alterada quando em contato com a gravidade dos planetas)
+     angle : armazena o angulo se o objeto rotacionado
+    
+
+
+    Methods
+    -------
+    atualiza()
+        responsável por atualizar o tiro, tanto removelo quando sair dos limites do jogo 
+        e também calcular a direção, sentido e velocidade nova quando afetado pela gravidade
+    
+    desenha()
+        responsável por desenhar o objeto Tiro na tela
+
+    """
     def __init__(self,mouse_pos,space_pos):
         self.tiro_img = pygame.image.load('Assets/tiro.png').convert_alpha()
         self.w = 45
         self.h = 45
         self.velocidade = 0.05
-        self.pos = np.array([space_pos[0],space_pos[1]]) #[80,525]
+        self.pos = np.array([space_pos[0],space_pos[1]]) 
         self.mouse_pos = mouse_pos
         self.distance = math.sqrt((mouse_pos[0] - self.pos[0]) ** 2 + (mouse_pos[1] - self.pos[1]) ** 2)
         self.direction = [(mouse_pos[0] - self.pos[0]) / self.distance, (mouse_pos[1] - self.pos[1]) / self.distance]
@@ -462,10 +677,31 @@ class Tiro():
     
 
     def desenha(self,surface):
-        # self.tiro_img = self.transform.rotate(self.tiro_img,self.angle) aqui
         surface.blit(self.tiro_img, self.pos)
 
 class Planeta:
+    """
+    Classe que gera o objeto do tiro presente na fase
+
+    ...
+
+    Attributes
+    ----------
+    sprites_plan : png das sprites dos planetas
+    pos_sprites : armazena a posição do planeta no png de sprites
+    pos : array que armazena a posição atual do planeta
+    
+
+
+    Methods
+    -------
+    gravidade()
+        função onde é implementada formula da gravidade (g = (G * M) / d²) e 
+        seu efeito sobre o tiro
+    
+    desenha()
+        responsável por desenhar o objeto Tiro na tela
+    """
     def __init__(self,pos_sprite,pos,grav=0):
         self.sprites_plan = pygame.image.load("Assets/sprites_planeta.png").convert_alpha()
         self.pos_sprites = pos_sprite
@@ -484,6 +720,27 @@ class Planeta:
         return a
     
 class Satellite():
+    """
+    Classe que gera o objeto do tiro presente na fase
+
+    ...
+
+    Attributes
+    ----------
+    sat : png do satelite
+    pos : array que armazena a posição atual do planeta
+    descendo : booleano utilizado para ditar para qual sentido na vertical ele deve se deslocar
+    w,h : armazena largura e altura do objeto
+
+
+    Methods
+    -------
+    atualiza()
+        função que atualiza a posição do satelite, além de também alterar se necessário o seu sentido de deslocamento
+    
+    desenha()
+        responsável por desenhar o objeto Tiro na tela
+    """
     def __init__(self,pos):
         self.sat = pygame.image.load("Assets/satellite.png").convert_alpha()
         self.pos = pos
@@ -498,9 +755,9 @@ class Satellite():
             self.descendo = True
 
         if self.descendo:
-            self.pos[1] += 1
+            self.pos[1] += 0.5
         else:
-            self.pos[1] -= 1
+            self.pos[1] -= 0.5
 
     def desenha(self,surface):
         surface.blit(self.sat, self.pos)
