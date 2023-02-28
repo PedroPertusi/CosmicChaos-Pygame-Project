@@ -134,7 +134,7 @@ class Level0():
         self.space_shooter = SpaceShooter()
         self.background = pygame.image.load('Assets/space_background.png').convert_alpha()
         self.tiro_mini = pygame.image.load('Assets/tiro_mini.png').convert_alpha()
-        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[600-83,300-77],10)]
+        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[600-83,300-77],50000)]
         self.lista_satelite = [Satellite([1000,200])]
         
     
@@ -143,12 +143,12 @@ class Level0():
         mx, my = pygame.mouse.get_pos()
         self.space_shooter.mx,self.space_shooter.my = mx,my
 
-        a = [0]
-
         for planeta in self.lista_planetas:
             if len(self.lista_tiros) > 0:
-                if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
-                    a = planeta.gravidade(self.lista_tiros[0].pos)
+                # if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
+                a = - planeta.gravidade(self.lista_tiros[0].pos)
+                if np.linalg.norm(planeta.pos - self.lista_tiros[0].pos) <= (planeta.pos[2]/2) + (self.lista_tiros[0].w/2):
+                    self.lista_tiros.remove(self.lista_tiros[0])
 
         if len(self.lista_tiros) > 0:
             for tiro in self.lista_tiros:
@@ -211,7 +211,7 @@ class Level1():
         self.space_shooter = SpaceShooter()
         self.background = pygame.image.load('Assets/space_background.png').convert_alpha()
         self.tiro_mini = pygame.image.load('Assets/tiro_mini.png').convert_alpha()
-        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[600,250],10),Planeta(self.pos_planetas['netuno'],[800,150],12),Planeta(self.pos_planetas['marte'],[800,500],4)]
+        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[600,250],5000),Planeta(self.pos_planetas['netuno'],[800,150], 1000),Planeta(self.pos_planetas['marte'],[800,500],4000)]
         self.lista_satelite = [Satellite([1000,200])]
         
     
@@ -220,12 +220,12 @@ class Level1():
         mx, my = pygame.mouse.get_pos()
         self.space_shooter.mx,self.space_shooter.my = mx,my
 
-        a = [0]
+        a = 0
 
         for planeta in self.lista_planetas:
             if len(self.lista_tiros) > 0:
-                if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
-                    a = planeta.gravidade(self.lista_tiros[0].pos)
+                # if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
+                a -= planeta.gravidade(self.lista_tiros[0].pos)
 
         if len(self.lista_tiros) > 0:
             for tiro in self.lista_tiros:
@@ -286,7 +286,7 @@ class Level2():
         self.space_shooter = SpaceShooter()
         self.background = pygame.image.load('Assets/space_background.png').convert_alpha()
         self.tiro_mini = pygame.image.load('Assets/tiro_mini.png').convert_alpha()
-        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[300,100],10),Planeta(self.pos_planetas['netuno'],[350,450],12),Planeta(self.pos_planetas['marte'],[900,50],4),Planeta(self.pos_planetas['jupiter'],[800,300],25),Planeta(self.pos_planetas['saturno'],[530,230],33)]
+        self.lista_planetas = [Planeta(self.pos_planetas['terra'],[300,100],5000),Planeta(self.pos_planetas['netuno'],[450,450],1000),Planeta(self.pos_planetas['marte'],[900,50],2000),Planeta(self.pos_planetas['saturno'],[530,230],3003)]
         self.lista_satelite = [Satellite([1000,200])]
         
     
@@ -295,12 +295,12 @@ class Level2():
         mx, my = pygame.mouse.get_pos()
         self.space_shooter.mx,self.space_shooter.my = mx,my
 
-        a = [0]
+        a = 0
 
         for planeta in self.lista_planetas:
             if len(self.lista_tiros) > 0:
-                if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
-                    a = planeta.gravidade(self.lista_tiros[0].pos)
+                # if pygame.Rect(planeta.pos[0],planeta.pos[1],planeta.pos_sprites[2]+40,planeta.pos_sprites[3]+40).colliderect(self.lista_tiros[0].pos[0],self.lista_tiros[0].pos[1],self.lista_tiros[0].w,self.lista_tiros[0].h): #o +40 eh o raio em volta que a gravidade vai afetar
+                a -= planeta.gravidade(self.lista_tiros[0].pos)
 
         if len(self.lista_tiros) > 0:
             for tiro in self.lista_tiros:
@@ -439,7 +439,7 @@ class Tiro():
         self.tiro_img = pygame.image.load('Assets/tiro.png').convert_alpha()
         self.w = 45
         self.h = 45
-        self.velocidade = 10
+        self.velocidade = 0.05
         self.pos = np.array([space_pos[0],space_pos[1]]) #[80,525]
         self.mouse_pos = mouse_pos
         self.distance = math.sqrt((mouse_pos[0] - self.pos[0]) ** 2 + (mouse_pos[1] - self.pos[1]) ** 2)
@@ -453,17 +453,8 @@ class Tiro():
         if sat_rect.colliderect(rect):
             return 'acabou'
         else:
-            if aceleracao[0] != 0:
-                self.velocidade = self.velocidade + aceleracao
-                self.pos = self.pos + self.velocidade * 0.5
-            else:
-                self.pos[0] += self.direction[0] * 5
-                self.pos[1] += self.direction[1] * 5
-
-            #self.pos = self.pos + self.velocidade #* 0.01 
-            #self.blitPos = self.pos - self.imgPosDiscount
-
-            
+            self.velocidade = self.direction
+            self.pos = self.pos + self.velocidade - aceleracao[0]
 
             if self.pos[0] >= 1200 or self.pos[0] <= 0 or self.pos[1] <= 0 or self.pos[1] >= 600:
                 return False
